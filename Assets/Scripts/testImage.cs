@@ -24,12 +24,28 @@ public class testImage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            StartCoroutine("downloadFromDrive");
+            downloadTextures();
         }
     }
 
+
+    public void downloadTextures()
+    {
+        print("begin download!");
+        var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
+        print(request.IsError);
+        print(request.ResponseData.Content);
+
+        downloadedcontent = request.ResponseData.Content;
+        Texture2D tex = new Texture2D(1024, 1024);
+        tex.LoadImage(downloadedcontent);
+        tex.Apply();
+        finaldownload.texture = tex;
+       
+    }
     public IEnumerator downloadFromDrive()
     {
+        print("begin download!");
         var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
         yield return request.Send();
         print(request.IsError);
