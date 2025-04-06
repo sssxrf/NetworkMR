@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGoogleDrive;
+using static System.Net.Mime.MediaTypeNames;
 
 
 public class testImage : MonoBehaviour
@@ -13,6 +14,8 @@ public class testImage : MonoBehaviour
     public RawImage finaldownload;
     public byte[] downloadedcontent;
 
+    public Material gunMaterial; // Gun material
+    public string imageID = "1gMi9FEi9idpEpCGpAxog-DLamxKEQskN";
     // Start is called before the first frame update
     void Start()
     {
@@ -24,29 +27,30 @@ public class testImage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            downloadTextures();
+            StartCoroutine(downloadFromDrive());
         }
     }
 
 
     public void downloadTextures()
     {
-        print("begin download!");
-        var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
-        print(request.IsError);
-        print(request.ResponseData.Content);
+        //print("begin download!");
+        //var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
+        //print(request.IsError);
+        //print(request.ResponseData.Content);
 
-        downloadedcontent = request.ResponseData.Content;
-        Texture2D tex = new Texture2D(1024, 1024);
-        tex.LoadImage(downloadedcontent);
-        tex.Apply();
-        finaldownload.texture = tex;
-       
+        //downloadedcontent = request.ResponseData.Content;
+        //Texture2D tex = new Texture2D(1024, 1024);
+        //tex.LoadImage(downloadedcontent);
+        //tex.Apply();
+        //finaldownload.texture = tex;
+        StartCoroutine(downloadFromDrive());
+
     }
     public IEnumerator downloadFromDrive()
     {
         print("begin download!");
-        var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
+        var request = GoogleDriveFiles.Download(imageID);
         yield return request.Send();
         print(request.IsError);
         print(request.ResponseData.Content);
@@ -57,5 +61,20 @@ public class testImage : MonoBehaviour
         tex.Apply();
         finaldownload.texture = tex;   
 
+    }
+
+    private void changeMainMap(Texture2D map)
+    {
+
+        // Assign to material's Albedo (Main Map)
+        if (gunMaterial != null)
+        {
+            gunMaterial.mainTexture = map; // or gunMaterial.SetTexture("_MainTex", tex);
+            Debug.Log("Texture successfully applied to material!");
+        }
+        else
+        {
+            Debug.LogWarning("Target material not assigned.");
+        }
     }
 }

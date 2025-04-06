@@ -10078,6 +10078,8 @@ MonoBehaviour:
   image: {fileID: 0}
   finaldownload: {fileID: 942259047}
   downloadedcontent: 
+  gunMaterial: {fileID: 0}
+  imageID: 1gMi9FEi9idpEpCGpAxog-DLamxKEQskN
 --- !u!114 &948761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12749,7 +12751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1230138912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13172,6 +13174,8 @@ MonoBehaviour:
   image: {fileID: 0}
   finaldownload: {fileID: 821804819}
   downloadedcontent: 
+  gunMaterial: {fileID: 2100000, guid: 285e0171b4225904ca62257dea5fb9bd, type: 2}
+  imageID: 1gMi9FEi9idpEpCGpAxog-DLamxKEQskN
 --- !u!4 &1256453358
 Transform:
   m_ObjectHideFlags: 0
