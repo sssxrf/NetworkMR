@@ -15,7 +15,7 @@ public class testImage : MonoBehaviour
     public byte[] downloadedcontent;
 
     public Material gunMaterial; // Gun material
-    public string imageID = "1gMi9FEi9idpEpCGpAxog-DLamxKEQskN";
+    public string imageID = "163jGcabQHcPwzbXIXQkwmkRkLZgedJ8s";
     // Start is called before the first frame update
     void Start()
     {
