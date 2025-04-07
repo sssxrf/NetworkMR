@@ -16,6 +16,8 @@ public class testImage : MonoBehaviour
 
     public Material gunMaterial; // Gun material
     public string imageID = "163jGcabQHcPwzbXIXQkwmkRkLZgedJ8s";
+    private string purpleID = "163jGcabQHcPwzbXIXQkwmkRkLZgedJ8s";
+    private string pinkID = "1VTPvqAYfpJTvx26W0gIIvvFavHYnhNez";
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,37 @@ public class testImage : MonoBehaviour
         StartCoroutine(downloadFromDrive());
 
     }
+
+    public void downloadAndLoadPurple()
+    {
+        downloadTexturesByID(purpleID);
+
+    }
+
+    public void downloadAndLoadPink()
+    {
+        downloadTexturesByID(pinkID);
+
+    }
+
+    private void downloadTexturesByID(string id)
+    {
+        //print("begin download!");
+        //var request = GoogleDriveFiles.Download("1gMi9FEi9idpEpCGpAxog-DLamxKEQskN");
+        //print(request.IsError);
+        //print(request.ResponseData.Content);
+
+        //downloadedcontent = request.ResponseData.Content;
+        //Texture2D tex = new Texture2D(1024, 1024);
+        //tex.LoadImage(downloadedcontent);
+        //tex.Apply();
+        //finaldownload.texture = tex;
+        StartCoroutine(downloadFromDrivebyID(id));
+
+    }
+
+    
+
     public IEnumerator downloadFromDrive()
     {
         print("begin download!");
@@ -59,7 +92,25 @@ public class testImage : MonoBehaviour
         Texture2D tex = new Texture2D(1024, 1024);
         tex.LoadImage(downloadedcontent);
         tex.Apply();
-        finaldownload.texture = tex;   
+        finaldownload.texture = tex;
+        changeMainMap(tex);
+
+    }
+
+    public IEnumerator downloadFromDrivebyID(string id)
+    {
+        print("begin download!");
+        var request = GoogleDriveFiles.Download(id);
+        yield return request.Send();
+        print(request.IsError);
+        print(request.ResponseData.Content);
+
+        downloadedcontent = request.ResponseData.Content;
+        Texture2D tex = new Texture2D(1024, 1024);
+        tex.LoadImage(downloadedcontent);
+        tex.Apply();
+        finaldownload.texture = tex;
+        changeMainMap(tex);
 
     }
 
