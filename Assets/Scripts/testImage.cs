@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGoogleDrive;
+using System.IO;
+using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
 
@@ -29,7 +31,12 @@ public class testImage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            StartCoroutine(downloadFromDrive());
+            StartCoroutine(uploadTextDrive());
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            StartCoroutine(UpdateTextFile("105YojQii8c6tjd_VfRu4dveGmhA3tKOx"));
         }
     }
 
@@ -49,6 +56,56 @@ public class testImage : MonoBehaviour
         StartCoroutine(downloadFromDrive());
 
     }
+
+
+    public IEnumerator uploadTextDrive()
+    {
+        var content = Encoding.ASCII.GetBytes("downloadedcontent");
+        var file = new UnityGoogleDrive.Data.File() { Name = "740statusTest.txt", Content = content };
+        var request = GoogleDriveFiles.Create(file);
+        request.Fields = new List<string> { "id" };
+        yield return request.Send();
+        print(request.IsError);
+
+
+
+    }
+
+
+    public IEnumerator UpdateTextFile(string fileId)
+    {
+        // Prepare your new text content and convert it to a byte array.
+        var updatedContent = Encoding.ASCII.GetBytes("your updated text content");
+
+        // Create a new file instance with the updated content.
+        // (Optionally, include other fields such as Name if you want to update metadata as well.)
+        var updatedFile = new UnityGoogleDrive.Data.File()
+        {
+            Content = updatedContent,
+            // Name = "740statusTest.txt", // include if you need to change or reaffirm the filename
+        };
+
+        // Use the Update method provided by the UnityGoogleDrive API.
+        // Pass in the file ID of the file to be updated and the new file object.
+        var request = GoogleDriveFiles.Update(fileId, updatedFile);
+
+        // Optional: specify what fields you want returned from the update.
+        request.Fields = new List<string> { "id" };
+
+        // Send the request.
+        yield return request.Send();
+
+        // Check if there was an error.
+        if (request.IsError)
+        {
+            Debug.LogError("Error updating file: " + request.Error);
+        }
+        else
+        {
+            Debug.Log("File updated successfully!");
+        }
+    }
+
 
     public void downloadAndLoadPurple()
     {
