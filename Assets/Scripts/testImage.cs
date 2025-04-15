@@ -6,6 +6,7 @@ using UnityGoogleDrive;
 using System.IO;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using TMPro;
 
 
 public class testImage : MonoBehaviour
@@ -14,30 +15,37 @@ public class testImage : MonoBehaviour
     [SerializeField]
     public Texture2D image;
     public RawImage finaldownload;
-    public byte[] downloadedcontent;
+    private byte[] downloadedcontent;
 
+    public TMP_Text synchronizeData_text;
     public Material gunMaterial; // Gun material
     public string imageID = "163jGcabQHcPwzbXIXQkwmkRkLZgedJ8s";
     private string purpleID = "163jGcabQHcPwzbXIXQkwmkRkLZgedJ8s";
     private string pinkID = "1VTPvqAYfpJTvx26W0gIIvvFavHYnhNez";
+    private string txtID = "105YojQii8c6tjd_VfRu4dveGmhA3tKOx";
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Start the coroutine that updates the file every 0.5 seconds
+        StartCoroutine(UpdateTextFileRoutine(txtID));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            StartCoroutine(uploadTextDrive());
-        }
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    StartCoroutine(uploadTextDrive());
+        //}
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            StartCoroutine(UpdateTextFile("105YojQii8c6tjd_VfRu4dveGmhA3tKOx"));
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    StartCoroutine(UpdateTextFile("105YojQii8c6tjd_VfRu4dveGmhA3tKOx"));
+        //}
+
+
     }
 
 
@@ -71,11 +79,22 @@ public class testImage : MonoBehaviour
 
     }
 
+    // Coroutine that repeatedly calls UpdateTextFile()
+    IEnumerator UpdateTextFileRoutine(string fileId)
+    {
+        while (true)
+        {
+            // Call your update coroutine and wait until it completes
+            yield return StartCoroutine(UpdateTextFile(fileId));
+            // Wait for 0.5 seconds before doing the next update
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 
     public IEnumerator UpdateTextFile(string fileId)
     {
         // Prepare your new text content and convert it to a byte array.
-        var updatedContent = Encoding.ASCII.GetBytes("your updated text content");
+        var updatedContent = Encoding.ASCII.GetBytes(synchronizeData_text.text);
 
         // Create a new file instance with the updated content.
         // (Optionally, include other fields such as Name if you want to update metadata as well.)
