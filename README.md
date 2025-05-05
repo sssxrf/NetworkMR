@@ -1,2 +1,2 @@
 # NetworkMR
- 
+ A simplified Mixed Reality Shooting game that built on [Meta all in one SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-all-in-one-sdk-269657?utm_source=google&utm_medium=cpc&utm_campaign=as_as_as_amer_amer-t1_en_pu_dsp-pmax_acq_pr_2024-04_x_cc3022_ev_id:71700000118169934&utm_content=_id:_SpringSalePMAX2023_&utm_term=&gad_source=1&gad_campaignid=21152476739&gbraid=0AAAAADdB-xFv4dXviubMU55snIFsbMohl&gclid=Cj0KCQjwoNzABhDbARIsALfY8VN0XjvszOv1PS509ZTylHbB4CVmWZMfmtQ_geIBCqaTShBFg-C7X2saAs3vEALw_wcB&gclsrc=aw.ds). The networking communication is bootstrapped on [google drive sdk for Unity](https://github.com/elringus/unity-google-drive)
